@@ -1,0 +1,41 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Build
+target/
+build/
+out/
+
+# Maven
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+
+# Local application data
+data/
+*.db
+*.mv.db
+*.trace.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
