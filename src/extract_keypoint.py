@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import cv2
 import numpy as np
 from ultralytics import YOLO
@@ -6,15 +7,12 @@ from ultralytics import YOLO
 
 model = YOLO("yolo11n-pose.pt")
 
+RAW_DIR = Path("data/raw")
+OUTPUT_DIR = Path("data/keypoints")
+
 
 def extract_sequence(folder):
-    folder = Path(folder)
-
     image_paths = sorted(folder.rglob("*.png"))
-
-    print("Ordner:", folder.resolve())
-    print("Existiert:", folder.exists())
-    print("PNG-Dateien:", len(image_paths))
 
     sequence = []
     detected = 0
@@ -33,17 +31,45 @@ def extract_sequence(folder):
 
         sequence.append(keypoints_xy)
 
-    print("Posen erkannt:", detected)
+    return np.array(sequence), detected
+
+
+def main():
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    folders = sorted(
+        folder
+        for folder in RAW_DIR.iterdir()
+        if folder.is_dir()
+        and (
+            folder.name.startswith("fall-")
+            or folder.name.startswith("adl-")
+        )
+    )
+
+    print(f"Gefundene Sequenzen: {len(folders)}")
     print()
 
-    return np.array(sequence)
+    for folder in folders:
+        print(f"Verarbeite {folder.name}")
 
-fall_sequence = extract_sequence("data/raw/fall-01-cam0-rgb")
-adl_sequence = extract_sequence("data/raw/adl-01-cam0-rgb")
+        sequence, detected = extract_sequence(folder)
 
-Path("data/keypoints").mkdir(parents=True, exist_ok=True)
-np.save("data/keypoints/fall_sequence.npy", fall_sequence)
-np.save("data/keypoints/adl_sequence.npy", adl_sequence)
+        if len(sequence) == 0:
+            print("Keine PNG-Dateien gefunden")
+            print()
+            continue
 
-print("Fall:", fall_sequence.shape)
-print("ADL:", adl_sequence.shape)
+        output_file = OUTPUT_DIR / f"{folder.name}.npy"
+
+        np.save(output_file, sequence)
+
+        print(f"Frames: {len(sequence)}")
+        print(f"Pose erkannt: {detected}")
+        print(f"Shape: {sequence.shape}")
+        print(f"Gespeichert: {output_file}")
+        print()
+
+
+if __name__ == "__main__":
+    main()
