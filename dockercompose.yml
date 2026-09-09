@@ -1,0 +1,11 @@
+services:
+  fall-detection:
+    build: .
+    container_name: fall-detection
+    restart: unless-stopped
+    networks:
+      - cloudflare
+
+networks:
+  cloudflare:
+    external: true
