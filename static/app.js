@@ -18,7 +18,6 @@ async function startCamera() {
     video.srcObject = stream;
 }
 
-
 async function sendFrame() {
 
     if (video.videoWidth === 0) {
