@@ -1,7 +1,7 @@
 import numpy as np
 
 sequence = np.load(
-    "src/data/keypoints/fall-01-cam0-rgb.npy"
+    "data/keypoints/fall-01-cam0-rgb.npy"
 )
 
 print("Shape:", sequence.shape)

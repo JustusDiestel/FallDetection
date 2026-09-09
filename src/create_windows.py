@@ -2,8 +2,7 @@ from pathlib import Path
 import csv
 import numpy as np
 
-from preprocess_keypoints import fill_missing_frames, normalize_sequence
-
+from preprocess_keypoints import fill_missing_frames, normalize_sequence, extract_features
 
 KEYPOINT_DIR = Path("data/keypoints")
 LABEL_FILE = Path("data/urfall/urfall-cam0-falls.csv")
@@ -86,7 +85,7 @@ def main():
         sequence = np.load(file_path)
 
         sequence = fill_missing_frames(sequence)
-        sequence = normalize_sequence(sequence)
+        sequence = extract_features(sequence)
 
         sequence_name = file_path.name.split("-cam")[0]
 
@@ -107,7 +106,7 @@ def main():
         sequence = np.load(file_path)
 
         sequence = fill_missing_frames(sequence)
-        sequence = normalize_sequence(sequence)
+        sequence = extract_features(sequence)
 
         sequence_name = file_path.name.split("-cam")[0]
 
@@ -140,20 +139,9 @@ def main():
         exist_ok=True
     )
 
-    np.save(
-        OUTPUT_DIR / "X.npy",
-        X
-    )
-
-    np.save(
-        OUTPUT_DIR / "y.npy",
-        y
-    )
-
-    np.save(
-        OUTPUT_DIR / "groups.npy",
-        groups
-    )
+    np.save(OUTPUT_DIR / "X.npy",X)
+    np.save(OUTPUT_DIR / "y.npy",y)
+    np.save(OUTPUT_DIR / "groups.npy",groups)
 
     print()
     print("Gespeichert:")

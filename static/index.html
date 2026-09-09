@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Fall Detection</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+</head>
+
+<body>
+
+    <main>
+
+        <h1>Fall Detection</h1>
+
+        <div class="video-container">
+
+            <video
+                id="video"
+                autoplay
+                playsinline
+            ></video>
+
+            <canvas id="overlay"></canvas>
+
+        </div>
+
+        <canvas
+            id="canvas"
+            hidden
+        ></canvas>
+
+        <div id="status">
+            Kamera wird gestartet...
+        </div>
+
+        <div id="probability">
+            Fall probability: -
+        </div>
+
+    </main>
+
+    <script src="/static/app.js"></script>
+
+</body>
+
+</html>

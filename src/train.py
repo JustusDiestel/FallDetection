@@ -59,7 +59,7 @@ for epoch in range(EPOCHS):
     total = 0
 
     for X_batch, y_batch in train_loader:
-
+        print(X_batch.shape, y_batch.shape)
         optimizer.zero_grad()
 
         output = model(X_batch)
@@ -94,7 +94,7 @@ for epoch in range(EPOCHS):
         f"Train Accuracy: {accuracy:.3f}"
     )
 
-    torch.save(
-        model.state_dict(),
-        "fall_classifier.pt"
-    )
+torch.save(
+    model.state_dict(),
+    "fall_classifier.pt"
+)

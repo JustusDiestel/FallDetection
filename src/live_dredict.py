@@ -6,8 +6,7 @@ import torch
 from ultralytics import YOLO
 
 from fall_model import FallClassifier
-from preprocess_keypoints import normalize_sequence
-
+from preprocess_keypoints import normalize_sequence, extract_features
 
 WINDOW_SIZE = 30
 
@@ -43,6 +42,9 @@ while True:
         frame,
         verbose=False
     )[0]
+
+
+    annotated_frame = result.plot()
 
 
     if (
@@ -82,7 +84,7 @@ while True:
             dtype=np.float32
         )
 
-        sequence = normalize_sequence(
+        sequence = extract_features(
             sequence
         )
 
@@ -127,7 +129,7 @@ while True:
 
 
     cv2.putText(
-        frame,
+        annotated_frame,
         prediction_text,
         (30, 50),
         cv2.FONT_HERSHEY_SIMPLEX,
@@ -139,7 +141,7 @@ while True:
 
     cv2.imshow(
         "Fall Detection",
-        frame
+        annotated_frame
     )
 
 
