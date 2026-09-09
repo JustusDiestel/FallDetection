@@ -22,6 +22,7 @@ Feature Extraction
 NORMAL / FALL
 ```
 
+
 Pro Frame werden die erkannten Körperpunkte verarbeitet und um zusätzliche Bewegungsmerkmale ergänzt, unter anderem:
 
 - normalisierte Keypoint-Positionen
